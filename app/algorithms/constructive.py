@@ -1,8 +1,7 @@
 import random
 
-
 def route_distance(route, dist_matrix):
-    """Hitung total jarak rute tertutup (kembali ke kota awal)."""
+    """Hitung total jarak rute tertutup (kembali ke kota awal)"""
     total = 0.0
     n = len(route)
     for i in range(n):
@@ -84,14 +83,36 @@ def random_route(dist_matrix, seed=None):
     return route, route_distance(route, dist_matrix)
 
 
+def load_demo_cities():
+    import csv
+    import math
+    import os
+
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        "..", "..", "data", "City.csv")
+    names, coords = [], []
+    if os.path.exists(path):
+        with open(path, newline="", encoding="utf-8-sig") as f:
+            for row in csv.DictReader(f):
+                row = {k.strip().lower(): v.strip() for k, v in row.items()}
+                names.append(row["name"])
+                coords.append((float(row["x"]), float(row["y"])))
+    else:
+        names = ["Surabaya", "Sidoarjo", "Gresik", "Mojokerto", "Malang", "Blitar"]
+        coords = [(0, 0), (20, 15), (18, 30), (55, 40), (90, 45), (110, 60)]
+
+    dist_matrix = [[math.dist(a, b) for b in coords] for a in coords]
+    return names, dist_matrix
+
+
 if __name__ == "__main__":
-    # example
-    demo_matrix = [
-        [0, 10, 15, 20],
-        [10, 0, 35, 25],
-        [15, 35, 0, 30],
-        [20, 25, 30, 0],
-    ]
-    print("NN :", nearest_neighbor(demo_matrix))
-    print("FI :", farthest_insertion(demo_matrix))
-    print("RND:", random_route(demo_matrix, seed=42))
+    # Demo: tiga metode konstruktif pada data City.csv
+    names, D = load_demo_cities()
+    print(f"Data: {len(names)} kota\n")
+    print(f"{'Metode':<20}{'Jarak':>9}  Rute")
+    for label, (route, dist) in [
+        ("Nearest Neighbor", nearest_neighbor(D)),
+        ("Farthest Insertion", farthest_insertion(D)),
+        ("Random (seed=42)", random_route(D, seed=42)),
+    ]:
+        print(f"{label:<20}{dist:>9.2f}  " + " -> ".join(names[i] for i in route))
