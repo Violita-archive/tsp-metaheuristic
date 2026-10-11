@@ -1,10 +1,27 @@
-# Perhitungan Manual SA, 2-Opt, dan Tabu Search pada TSP
+# LAPORAN: Optimasi TSP dengan SA, 2-Opt, dan Tabu Search
 
-Laporan ini menunjukkan perhitungan **manual (langkah demi langkah)** tiga metode optimasi pada kasus **Traveling Salesman Problem (TSP)** dengan 5 kota:
+Repo ini berisi implementasi aplikasi optimasi **Traveling Salesman Problem (TSP)** beserta **perhitungan manual** tiga metode:
 
 1. **2-Opt** (local search)
 2. **Tabu Search**
 3. **Simulated Annealing (SA)**
+
+## Struktur Aplikasi (`app/`)
+
+| File | Fungsi |
+|------|--------|
+| `main.py` | Titik masuk program, menjalankan metode dan membandingkan hasil |
+| `constructive.py` | Pembangun solusi awal: **NN** (Nearest Neighbor), **FI** (Farthest Insertion), **Random** |
+| `two_opt.py` | Local search 2-Opt |
+| `sa.py` | Simulated Annealing |
+| `tabu.py` | Tabu Search |
+| `loader.py` | Membaca dataset dari folder `data/` |
+| `map_plot.py` | Visualisasi rute pada peta (matplotlib) |
+| `export.py` | Ekspor hasil |
+
+## Cakupan Bagian Ini: Hitung Manual (SA, 2-Opt, Tabu)
+
+Bagian di bawah memverifikasi cara kerja `two_opt.py`, `tabu.py`, dan `sa.py` lewat perhitungan **langkah demi langkah** pada contoh kecil (5 kota). Solusi awal pada contoh diambil dari urutan `A-B-C-D-E` (setara hasil `constructive.py` mode Random).
 
 > Data pada laporan ini adalah contoh. Ganti matriks jarak dengan data tugasmu, lalu ikuti alur yang sama.
 
@@ -222,11 +239,19 @@ Dengan 5 kota, seluruh 4! = 24 permutasi dapat dicek: cost optimum global = **72
 
 ---
 
-## 7. Struktur Repo (saran)
+## 7. Struktur Repo
 
 ```
 .
-├── README.md        # laporan ini
-├── data/            # matriks jarak
-└── src/             # (opsional) kode Python untuk verifikasi
+├── README.md            # laporan ini (hitung manual SA, 2-Opt, Tabu)
+├── data/                # dataset (dibaca oleh loader.py)
+└── app/
+    ├── main.py
+    ├── constructive.py  # NN, FI, Random
+    ├── two_opt.py
+    ├── sa.py
+    ├── tabu.py
+    ├── loader.py
+    ├── map_plot.py
+    └── export.py
 ```
