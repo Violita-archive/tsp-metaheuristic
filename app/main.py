@@ -30,7 +30,7 @@ except ImportError:
     _has_loader = False
 
 try:
-    from algorithms.constructive import nearest_neighbor, farthest_insertion, random_tour
+    from algorithms.constructive import nearest_neighbor, farthest_insertion, random_route
     _has_constructive = True
 except ImportError:
     _has_constructive = False
@@ -362,7 +362,7 @@ class TSPApp(ctk.CTk):
             elif c == "Farthest Insertion":
                 init_route, init_dist = farthest_insertion(dm)
             else:
-                init_route, init_dist = random_tour(dm)
+                init_route, init_dist = random_route(dm)
 
             # 2. Metaheuristik
             m = self.var_meta.get()
@@ -383,7 +383,7 @@ class TSPApp(ctk.CTk):
 
             # 3. 2-Opt (opsional)
             if self.var_two_opt.get() and _has_two_opt:
-                final_route, final_dist, _ = two_opt(dm, meta_route)
+                final_route, final_dist, _ = two_opt(meta_route, dm)
             else:
                 final_route, final_dist = meta_route, meta_dist
 
