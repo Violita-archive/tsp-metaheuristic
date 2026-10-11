@@ -1,17 +1,17 @@
-ry:
+try:
     from .constructive import route_distance
 except ImportError:
     from constructive import route_distance
 
 
 def _reverse_segment(route, i, j):
-    """Balik segmen route[i : j+1]. Ini operasi inti dari 2-opt."""
+    """operasi inti dari 2-opt(balik segmen route[i : j+1])"""
     return route[:i] + route[i:j + 1][::-1] + route[j + 1:]
 
 
 def two_opt(route, dist_matrix, max_iter=1000):
     """
-    2-opt: coba semua pasangan edge (i, j). Klo membalik segmen diantara keduanya menghasilkan rute lebih pendek, pakai rute baru itu.
+    2-opt: coba semua pasangan edge (i, j). Kalau membalik segmen diantara keduanya menghasilkan rute lebih pendek, pakai rute baru itu.
     Ulangi sampai tidak ada perbaikan lagi (converge) atau max_iter habis.
     """
     best_route = route[:]
@@ -39,18 +39,22 @@ def two_opt(route, dist_matrix, max_iter=1000):
 
 
 if __name__ == "__main__":
-    # example: NN dulu, baru diperbaiki pakai 2-opt.
-    from constructive import nearest_neighbor
+    from constructive import (nearest_neighbor, farthest_insertion,
+                              random_route, load_demo_cities)
 
-    demo_matrix = [
-        [0, 10, 15, 20],
-        [10, 0, 35, 25],
-        [15, 35, 0, 30],
-        [20, 25, 30, 0],
+    names, D = load_demo_cities()
+    print(f"Data: {len(names)} kota\n")
+    print(f"{'Kombinasi':<26}{'Jarak':>9}  Rute")
+
+    konstruksi = [
+        ("NN", nearest_neighbor(D)),
+        ("FI", farthest_insertion(D)),
+        ("Random (seed=42)", random_route(D, seed=42)),
     ]
-    initial_route, initial_dist = nearest_neighbor(demo_matrix)
-    print("Awal (NN):", initial_route, initial_dist)
+    for label, (route, dist) in konstruksi:
+        print(f"{label:<26}{dist:>9.2f}  " + " -> ".join(names[i] for i in route))
 
-    final_route, final_dist, hist = two_opt(initial_route, demo_matrix)
-    print("Setelah 2-opt:", final_route, final_dist)
-    print("History:", hist)
+        route2, dist2, hist = two_opt(route, D)
+        print(f"{label + ' -> 2-Opt':<26}{dist2:>9.2f}  "
+              + " -> ".join(names[i] for i in route2)
+              + f"   (history: {[round(h, 2) for h in hist]})")
