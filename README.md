@@ -5,8 +5,6 @@
 
 ---
 
-# tsp-metaheuristic
-
 ## 1. Deskripsi Proyek
 
 **TSP Optimizer** merupakan aplikasi desktop berbasis Python yang dikembangkan untuk menyelesaikan permasalahan *Traveling Salesman Problem* (TSP), yaitu pencarian rute perjalanan dengan total jarak minimum. Aplikasi ini dirancang sebagai sarana implementasi dan pengujian algoritma optimasi untuk menentukan urutan kunjungan sejumlah kota secara efisien. Setiap kota direpresentasikan menggunakan data koordinat yang kemudian diolah untuk menghitung jarak antarkota. Melalui aplikasi ini, pengguna dapat melakukan proses pembentukan rute awal, optimasi perjalanan, serta melihat hasil perhitungan dalam satu antarmuka.
