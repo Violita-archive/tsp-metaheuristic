@@ -185,3 +185,56 @@ flowchart TD
 | 6 | Output | Menampilkan rute akhir, jarak, grafik, dan hasil optimasi |
 
 ---
+
+
+## 6. Perhitungan Manual
+
+---
+
+
+## 7. Cara Instalasi & Menjalankan Aplikasi
+
+Aplikasi **TSP Optimizer** dikembangkan menggunakan Python dengan antarmuka desktop berbasis CustomTkinter. Untuk menjalankannya, pengguna perlu menginstal Python dan library yang tercantum dalam `requirements.txt`.
+
+### 7.1 Persyaratan Sistem
+
+- Python 3.10 atau lebih baru (disarankan).
+- Git (opsional, untuk mengunduh repository).
+- Sistem operasi yang mendukung antarmuka desktop Python.
+- Library Python sesuai file `requirements.txt`.
+
+### 7.2 Instalasi
+
+**1. Clone repository**
+
+Buka terminal atau Command Prompt, kemudian jalankan:
+
+```bash
+git clone -b dev-app https://github.com/Violita-archive/tsp-metaheuristic.git
+cd tsp-metaheuristic
+```
+
+Alternatifnya, pengguna dapat mengunduh repository melalui **Code → Download ZIP**, kemudian mengekstraknya.
+
+**2. Instal dependensi**
+
+Jalankan perintah berikut dari direktori utama proyek:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+**3. Jalankan aplikasi**
+
+Setelah proses instalasi selesai, jalankan:
+
+```bash
+python app/main.py
+```
+
+Jika berhasil, jendela **TSP Metaheuristic Optimizer** akan terbuka dan aplikasi siap digunakan.
+
+> **Catatan:** Pada Windows, perintah `python` dapat diganti dengan `py` apabila menggunakan Python Launcher.
+
+---
+
