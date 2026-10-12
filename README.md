@@ -1,7 +1,5 @@
 # TSP Optimizer
-### Implementasi Algoritma Heuristik dan Metaheuristik untuk Optimasi Rute Perjalanan
-
-**Proyek Mata Kuliah Metode Optimasi Metaheuristik — Kelompok ...**
+### **Proyek Mata Kuliah Metode Optimasi Metaheuristik — Kelompok ...**
 
 ---
 
