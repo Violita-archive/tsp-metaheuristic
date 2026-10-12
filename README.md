@@ -49,20 +49,22 @@ Dataset yang digunakan berasal dari file [`data/City.csv`](data/City.csv) dalam 
 | 5 | Malang | 90 | 45 |
 | 6 | Blitar | 110 | 60 |
 
+
 ### 3.3 Perhitungan Jarak Antarkota
 
-Jarak antarkota dihitung menggunakan **Euclidean Distance**, yaitu jarak garis lurus antara dua titik koordinat.
+Jarak antarkota dalam aplikasi dihitung menggunakan **Euclidean Distance**, yaitu jarak garis lurus antara dua titik berdasarkan koordinat X dan Y. Hasil perhitungan digunakan untuk membentuk matriks jarak sebagai dasar proses optimasi rute.
 
-Rumus:
+Rumus Euclidean Distance:
 
 $$
-d(i,j)=\sqrt{(x_i-x_j)^2+(y_i-y_j)^2}
+d(i,j) = \sqrt{(x_i-x_j)^2 + (y_i-y_j)^2}
 $$
 
 Keterangan:
-- \(d(i,j)\): jarak antara kota i dan kota j.
-- \(x_i,y_i\): koordinat kota i.
-- \(x_j,y_j\): koordinat kota j.
+- $d(i,j)$: jarak antara kota $i$ dan kota $j$.
+- $x_i, y_i$: koordinat kota $i$.
+- $x_j, y_j$: koordinat kota $j$.
+
 
 **Contoh:** Jarak Surabaya (0,0) ke Sidoarjo (20,15).
 
@@ -72,5 +74,114 @@ d=\sqrt{(20-0)^2+(15-0)^2}
 $$
 
 Hasil perhitungan jarak setiap pasangan kota digunakan untuk membentuk matriks jarak yang menjadi dasar proses optimasi rute.
+
+---
+
+
+## 4. Landasan Teori
+
+### 4.1 Traveling Salesman Problem (TSP)
+
+*Traveling Salesman Problem* (TSP) merupakan permasalahan optimasi kombinatorial yang bertujuan menentukan rute perjalanan dengan total jarak minimum. Dalam TSP, setiap kota harus dikunjungi tepat satu kali dan perjalanan berakhir dengan kembali ke kota asal. Semakin banyak jumlah kota, semakin besar kemungkinan rute yang terbentuk sehingga diperlukan algoritma untuk mencari solusi secara efisien.
+
+### 4.2 Heuristik Konstruktif
+
+Heuristik konstruktif merupakan pendekatan yang digunakan untuk membentuk solusi awal berdasarkan aturan tertentu. Dalam aplikasi TSP Optimizer, tersedia tiga metode pembentukan solusi awal:
+
+**1. Nearest Neighbor (NN)**
+
+*Nearest Neighbor* membentuk rute dengan memilih kota terdekat yang belum dikunjungi dari posisi saat ini. Proses berulang hingga seluruh kota dikunjungi, kemudian perjalanan kembali ke kota awal. Metode ini sederhana dan cepat, tetapi tidak selalu menghasilkan rute dengan jarak minimum.
+
+**2. Farthest Insertion (FI)**
+
+*Farthest Insertion* membentuk rute secara bertahap dengan memilih kota yang paling jauh dari rute yang telah terbentuk, kemudian menyisipkannya pada posisi yang menghasilkan tambahan jarak terkecil. Proses dilakukan hingga seluruh kota masuk ke dalam rute.
+
+**3. Random**
+
+*Random* membentuk solusi awal dengan mengacak urutan kunjungan kota tanpa mempertimbangkan jarak antarkota. Metode ini digunakan sebagai alternatif solusi awal sekaligus pembanding terhadap metode konstruktif lainnya.
+
+### 4.3 Simulated Annealing (SA)
+
+*Simulated Annealing* merupakan algoritma metaheuristik yang terinspirasi dari proses pendinginan material dalam metalurgi. Algoritma ini mencari solusi yang lebih baik dengan mengevaluasi perubahan rute dan menggunakan probabilitas untuk menentukan penerimaan solusi baru.
+
+Solusi yang memiliki jarak lebih pendek akan diterima, sedangkan solusi yang lebih buruk masih dapat diterima berdasarkan probabilitas yang dipengaruhi oleh suhu (*temperature*). Seiring penurunan suhu, kemungkinan menerima solusi yang lebih buruk semakin kecil. Mekanisme tersebut membantu algoritma keluar dari kondisi optimum lokal dan memperluas pencarian solusi.
+
+### 4.4 Tabu Search (TS)
+
+*Tabu Search* merupakan algoritma metaheuristik yang menggunakan mekanisme memori berupa *tabu list* untuk menghindari pengulangan gerakan pencarian tertentu. Algoritma mengevaluasi sejumlah solusi tetangga dan memilih kandidat terbaik yang memenuhi aturan tabu.
+
+Berbeda dengan pencarian lokal biasa, Tabu Search dapat menerima solusi yang lebih buruk untuk menjelajahi ruang pencarian yang lebih luas. Gerakan yang masuk ke dalam *tabu list* dibatasi sementara, tetapi dapat diterima kembali melalui *aspiration criterion* apabila menghasilkan solusi terbaik baru.
+
+### 4.5 2-Opt Local Search
+
+*2-Opt* merupakan metode pencarian lokal yang memperbaiki rute dengan memilih dua posisi dan membalik urutan kota di antara kedua posisi tersebut. Perubahan diterima apabila menghasilkan total jarak yang lebih pendek dibandingkan rute sebelumnya.
+
+Proses perbaikan dilakukan secara berulang hingga tidak ditemukan perubahan yang dapat mengurangi jarak perjalanan. Dalam aplikasi TSP Optimizer, 2-Opt digunakan sebagai tahap penyempurnaan setelah optimasi Simulated Annealing atau Tabu Search dan dapat diaktifkan atau dinonaktifkan oleh pengguna.
+
+### 4.6 Ringkasan Metode
+
+| Metode | Kategori | Fungsi |
+|--------|----------|--------|
+| Nearest Neighbor | Heuristik konstruktif | Membentuk rute awal berdasarkan kota terdekat |
+| Farthest Insertion | Heuristik konstruktif | Membentuk rute awal melalui penyisipan kota terjauh |
+| Random | Inisialisasi acak | Membentuk rute awal secara acak |
+| Simulated Annealing | Metaheuristik | Mengoptimalkan rute menggunakan probabilitas penerimaan solusi |
+| Tabu Search | Metaheuristik | Mengoptimalkan rute menggunakan memori tabu |
+| 2-Opt | Local Search | Memperbaiki rute melalui pembalikan segmen |
+
+---
+
+
+## 5. Metodologi & Pipeline
+
+### 5.1 Metodologi
+
+Proses optimasi pada aplikasi **TSP Optimizer** dilakukan melalui tiga tahap utama, yaitu pembentukan solusi awal menggunakan metode konstruktif, optimasi menggunakan algoritma metaheuristik, dan perbaikan tambahan menggunakan 2-Opt Local Search.
+
+Tahap pertama dimulai dengan memuat dataset kota dan menghitung matriks jarak menggunakan Euclidean Distance. Selanjutnya, pengguna memilih salah satu metode pembentukan solusi awal, yaitu Nearest Neighbor, Farthest Insertion, atau Random.
+
+Rute awal kemudian dioptimalkan menggunakan Simulated Annealing atau Tabu Search sesuai pilihan pengguna. Setelah proses metaheuristik selesai, hasilnya dapat diperbaiki kembali menggunakan 2-Opt apabila fitur tersebut diaktifkan. Aplikasi kemudian menampilkan rute akhir, total jarak, persentase perbaikan, serta visualisasi hasil optimasi.
+
+### 5.2 Flowchart Pipeline
+
+```mermaid
+flowchart TD
+    A([Mulai]) --> B[Memuat Dataset CSV/Excel]
+    B --> C[Menghitung Matriks Jarak]
+    C --> D{Pilih Metode Solusi Awal}
+    D --> E[Nearest Neighbor]
+    D --> F[Farthest Insertion]
+    D --> G[Random]
+
+    E --> H[Solusi Awal]
+    F --> H
+    G --> H
+
+    H --> I{Pilih Metaheuristik}
+    I --> J[Simulated Annealing]
+    I --> K[Tabu Search]
+
+    J --> L[Hasil Metaheuristik]
+    K --> L
+
+    L --> M{Aktifkan 2-Opt?}
+    M -->|Ya| N[Perbaikan Rute 2-Opt]
+    M -->|Tidak| O[Hasil Akhir]
+    N --> O
+
+    O --> P[Visualisasi dan Evaluasi Hasil]
+    P --> Q([Selesai])
+```
+
+### 5.3 Tahapan Proses Optimasi
+
+| Tahap | Proses | Keterangan |
+|:---:|--------|------------|
+| 1 | Input Dataset | Membaca data kota dari file CSV atau Excel |
+| 2 | Perhitungan Jarak | Membentuk matriks jarak menggunakan Euclidean Distance |
+| 3 | Solusi Awal | Menggunakan NN, Farthest Insertion, atau Random |
+| 4 | Optimasi Metaheuristik | Menggunakan Simulated Annealing atau Tabu Search |
+| 5 | Perbaikan Lokal | Menerapkan 2-Opt apabila diaktifkan |
+| 6 | Output | Menampilkan rute akhir, jarak, grafik, dan hasil optimasi |
 
 ---
