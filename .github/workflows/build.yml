@@ -28,7 +28,7 @@ jobs:
           --add-data "data;data"
           --add-data "app;app"
           --collect-all customtkinter
-          main_final.py
+          app/main.py
 
       - name: Install Inno Setup
         run: choco install innosetup --yes
@@ -64,7 +64,7 @@ jobs:
           --add-data "data:data"
           --add-data "app:app"
           --collect-all customtkinter
-          main_final.py
+          app/main.py
 
       - name: Create DMG
         run: |
