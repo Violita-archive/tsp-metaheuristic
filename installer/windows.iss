@@ -5,6 +5,7 @@ AppPublisher=ITS Surabaya
 DefaultDirName={autopf}\TSP Optimizer
 DefaultGroupName=TSP Optimizer
 OutputBaseFilename=TSP-Optimizer-Setup-v1.0
+OutputDir=..\Output
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -16,7 +17,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "Buat shortcut di Desktop"; GroupDescription: "Ikon Tambahan:"; Flags: unchecked
 
 [Files]
-Source: "dist\TSP-Optimizer\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\dist\TSP-Optimizer\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\TSP Optimizer"; Filename: "{app}\TSP-Optimizer.exe"
