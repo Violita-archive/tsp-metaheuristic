@@ -28,6 +28,7 @@ jobs:
           --add-data "data;data"
           --add-data "app;app"
           --collect-all customtkinter
+          --paths app
           app/main.py
 
       - name: Install Inno Setup
@@ -64,6 +65,7 @@ jobs:
           --add-data "data:data"
           --add-data "app:app"
           --collect-all customtkinter
+          --paths app
           app/main.py
 
       - name: Create DMG

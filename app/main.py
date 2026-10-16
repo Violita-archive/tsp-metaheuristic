@@ -11,11 +11,13 @@ import subprocess
 
 # paket-paket yang wajib ada
 _required = ["customtkinter", "matplotlib", "numpy", "pandas", "openpyxl"]
-for _pkg in _required:
-    try:
-        __import__(_pkg)
-    except ImportError:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", _pkg, "-q"])
+# instalasi otomatis hanya dijalankan saat tidak dalam bentuk installer (.exe/.app)
+if not getattr(sys, "frozen", False):
+    for _pkg in _required:
+        try:
+            __import__(_pkg)
+        except ImportError:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", _pkg, "-q"])
 
 sys.path.insert(0, os.path.dirname(__file__))
 
