@@ -1,0 +1,86 @@
+name: Build Installers
+
+on:
+  push:
+    branches: [main, dev-app]
+  workflow_dispatch:
+
+jobs:
+  # ─────────────── WINDOWS ───────────────
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyinstaller customtkinter matplotlib numpy pandas openpyxl
+
+      - name: Build with PyInstaller
+        run: >
+          pyinstaller
+          --name TSP-Optimizer
+          --windowed
+          --onedir
+          --add-data "data;data"
+          --add-data "app;app"
+          --collect-all customtkinter
+          main_final.py
+
+      - name: Install Inno Setup
+        run: choco install innosetup --yes
+
+      - name: Build installer
+        run: iscc installer\windows.iss
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: Output\TSP-Optimizer-Setup-v1.0.exe
+
+  # ─────────────── MAC ───────────────
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyinstaller customtkinter matplotlib numpy pandas openpyxl
+
+      - name: Build with PyInstaller
+        run: >
+          pyinstaller
+          --name TSP-Optimizer
+          --windowed
+          --onedir
+          --add-data "data:data"
+          --add-data "app:app"
+          --collect-all customtkinter
+          main_final.py
+
+      - name: Create DMG
+        run: |
+          brew install create-dmg
+          create-dmg \
+            --volname "TSP Optimizer" \
+            --window-pos 200 120 \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --icon "TSP-Optimizer.app" 175 190 \
+            --app-drop-link 425 190 \
+            "TSP-Optimizer-v1.0.dmg" \
+            "dist/TSP-Optimizer.app"
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: mac-dmg
+          path: TSP-Optimizer-v1.0.dmg
