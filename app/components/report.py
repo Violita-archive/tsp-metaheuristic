@@ -27,7 +27,7 @@ def pipeline_text(run):
     if run["meta_method"] != "—":
         parts.append(f"{run['meta_method']} ({run['move']})")
     if run["two_opt"]:
-        parts.append("2-Opt")
+        parts.append("2-Opt LS")
     return " → ".join(parts)
 
 
@@ -38,7 +38,7 @@ def run_row(run):
         "Inisialisasi": run["init_method"],
         "Metaheuristik": run["meta_method"],
         "Move": run["move"] if run["meta_method"] != "—" else "-",
-        "2-Opt": "Ya" if run["two_opt"] else "Tidak",
+        "2-Opt LS": "Ya" if run["two_opt"] else "Tidak",
         "Parameter": params_text(run["params"]),
         "Jarak Awal": round(run["init_dist"], 4),
         "Setelah Metaheuristik": round(run["meta_dist"], 4) if run["meta_method"] != "—" else None,
@@ -82,7 +82,7 @@ def export_run(path, cities, run, runs=None):
         ("Inisialisasi", run["init_method"]),
         ("Metaheuristik", run["meta_method"]),
         ("Move Operator", run["move"] if run["meta_method"] != "—" else "-"),
-        ("2-Opt", "Ya" if run["two_opt"] else "Tidak"),
+        ("2-Opt Local Search", "Ya" if run["two_opt"] else "Tidak"),
         ("Jumlah Kota", len(cities)),
         ("Jarak Awal", round(run["init_dist"], 4)),
         ("Setelah Metaheuristik", round(run["meta_dist"], 4)),

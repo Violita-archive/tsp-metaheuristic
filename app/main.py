@@ -328,13 +328,18 @@ class TSPApp(ctk.CTk):
         self._build_ts_params(self.param_holder)
         self._switch_param_frame()
 
-        self._section(body, "LOCAL SEARCH")
-        self.var_two_opt = ctk.BooleanVar(value=True)
-        ctk.CTkCheckBox(body, text="Terapkan 2-Opt setelahnya", variable=self.var_two_opt,
+        self._section(body, "LOCAL SEARCH (OPSIONAL)")
+        # default nonaktif agar hasil SA/Tabu tidak tercampur perbaikan 2-Opt
+        self.var_two_opt = ctk.BooleanVar(value=False)
+        ctk.CTkCheckBox(body, text="2-Opt local search setelah metaheuristik",
+                        variable=self.var_two_opt,
                         text_color=SB_FG, fg_color=ACCENT, hover_color=ACCENT_HV,
                         checkmark_color=SURFACE, font=("Segoe UI", 10),
                         border_color=DARK_BRD, checkbox_width=18, checkbox_height=18
-                        ).pack(anchor="w", padx=14, pady=(0, 12))
+                        ).pack(anchor="w", padx=14, pady=(0, 2))
+        self._sb_label(body, "Berbeda dengan move operator 2-Opt di atas: tahap ini hanya\n"
+                             "menerima perbaikan sampai optimum lokal (post-optimization)."
+                       ).pack(anchor="w", padx=14, pady=(0, 12))
 
     def _param_grid(self, parent, spec, store):
         """spec: list (key, label, default). Entry disusun dua kolom."""
@@ -536,7 +541,7 @@ class TSPApp(ctk.CTk):
 
         self.c_awal_val, self.c_awal_sub = card(1, 0, "Jarak Awal", sub_color=GRAY)
         self.c_meta_val, self.c_meta_pct = card(1, 1, "Hasil Metaheuristik")
-        self.c_2opt_val, self.c_2opt_pct = card(2, 0, "Setelah 2-Opt")
+        self.c_2opt_val, self.c_2opt_pct = card(2, 0, "Setelah 2-Opt LS")
         self.c_gain_val, self.c_gain_pct = card(2, 1, "Total Gain", val_color=ACCENT,
                                                 sub_color=ACCENT, accent=True)
         self.lbl_run_info = ctk.CTkLabel(stats, text="", font=("Segoe UI", 9),
@@ -820,7 +825,7 @@ class TSPApp(ctk.CTk):
             sa = self.var_meta.get() == "Simulated Annealing"
             parts.append(f"{'SA' if sa else 'Tabu'} ({(self.var_sa_move if sa else self.var_ts_move).get()})")
         if self.var_two_opt.get():
-            parts.append("2-Opt")
+            parts.append("2-Opt LS")
         self.pipe_label.configure(text="Pipeline: " + " → ".join(parts))
 
     def _parse_seed(self):
@@ -1097,9 +1102,9 @@ class TSPApp(ctk.CTk):
                      font=("Segoe UI", 11, "bold"), text_color=GOLD
                      ).grid(row=1, column=0, padx=18, pady=(2, 8), sticky="w")
 
-        cols = ["Run", "Inisialisasi", "Metaheuristik", "Move", "2-Opt", "Parameter",
+        cols = ["Run", "Inisialisasi", "Metaheuristik", "Move", "2-Opt LS", "Parameter",
                 "Jarak Awal", "Jarak Final", "Gain (%)", "Iterasi", "Waktu (s)", "Kriteria Berhenti"]
-        widths = [60, 115, 125, 70, 50, 260, 85, 90, 65, 65, 70, 220]
+        widths = [60, 115, 125, 70, 72, 260, 85, 90, 65, 65, 70, 220]
         tf = ctk.CTkFrame(win, fg_color=SURFACE, border_color=BORDER, border_width=1)
         tf.grid(row=2, column=0, sticky="ew", padx=16)
         tf.grid_columnconfigure(0, weight=1)
@@ -1401,7 +1406,7 @@ class TSPApp(ctk.CTk):
             ctk.CTkLabel(ctrl, text=lbl, font=("Segoe UI", 9, "bold"), text_color=GRAY
                          ).grid(row=0, column=k, padx=(12, 4), pady=(10, 0), sticky="w")
             w.grid(row=1, column=k, padx=(12, 4), pady=(2, 10), sticky="w")
-        ctk.CTkCheckBox(ctrl, text="Sertakan 2-Opt", variable=var_2opt, font=("Segoe UI", 10),
+        ctk.CTkCheckBox(ctrl, text="Sertakan 2-Opt LS", variable=var_2opt, font=("Segoe UI", 10),
                         fg_color=ACCENT, hover_color=ACCENT_HV, text_color=FG,
                         checkbox_width=16, checkbox_height=16
                         ).grid(row=1, column=4, padx=12, pady=(2, 10))
@@ -1583,7 +1588,7 @@ class TSPApp(ctk.CTk):
                 "Algoritma": algo, "Parameter divariasikan": var_param.get(),
                 "Nilai": ", ".join(map(str, vals)), "Ulangan": reps,
                 "Inisialisasi": base["init"], "Seed dasar": base["seed"],
-                "2-Opt": "Ya" if var_2opt.get() else "Tidak",
+                "2-Opt LS": "Ya" if var_2opt.get() else "Tidak",
                 "Parameter lain": report.params_text(
                     self._sa_from_entries_safe() if algo == "Simulated Annealing"
                     else self._ts_from_entries_safe()),
