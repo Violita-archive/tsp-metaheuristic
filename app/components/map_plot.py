@@ -86,26 +86,20 @@ def plot_route(coords, names, route, initial_route=None,
     # rute akhir + panah arah
     r = rotate_to_depot(route)
     closed = r + [r[0]]
-    for a, b in zip(closed[:-1], closed[1:]):
-        ax.annotate("", xy=coords[b], xytext=coords[a], zorder=2,
-                    arrowprops=dict(arrowstyle="-|>,head_length=0.55,head_width=0.28",
-                                    color=P["coral"], lw=2.4,
-                                    shrinkA=11, shrinkB=11))
+    if len(coords) > 40:
+        ax.plot([coords[i][0] for i in closed], [coords[i][1] for i in closed],
+                color=P["coral"], lw=1.8, zorder=2)
+    else:
+        sh = 11 if len(coords) <= 25 else 6
+        for a, b in zip(closed[:-1], closed[1:]):
+            ax.annotate("", xy=coords[b], xytext=coords[a], zorder=2,
+                        arrowprops=dict(arrowstyle="-|>,head_length=0.55,head_width=0.28",
+                                        color=P["coral"], lw=2.4 if sh == 11 else 1.8,
+                                        shrinkA=sh, shrinkB=sh))
 
-    # titik kota bernomor
+    # titik kota bernomor (mode ringkas untuk data besar)
     order = {city: k + 1 for k, city in enumerate(r)}
-    for i, (x, y) in enumerate(coords):
-        depot = i == 0
-        ax.scatter([x], [y], s=430 if depot else 300, zorder=4,
-                   color=P["sun"] if depot else P["surface"],
-                   edgecolors=P["ink"], linewidths=1.8)
-        ax.text(x, y, "★" if depot else str(order[i]), ha="center", va="center",
-                fontsize=11 if depot else 9, fontweight="bold", color=P["ink"], zorder=5)
-        ax.annotate(names[i] + ("  · DEPOT" if depot else ""), (x, y),
-                    xytext=(0, -19 if depot else 17), textcoords="offset points",
-                    ha="center", va="top" if depot else "baseline",
-                    fontsize=9, fontweight="bold", color=P["ink"],
-                    path_effects=halo, zorder=6)
+    _draw_nodes(ax, coords, names, order, halo)
 
     ax.margins(0.14)
     handles = [Line2D([0], [0], color=P["coral"], lw=2.4, label="Rute akhir")]
@@ -116,6 +110,46 @@ def plot_route(coords, names, route, initial_route=None,
                           markeredgecolor=P["ink"], markersize=8, label="Depot"))
     ax.legend(handles=handles, loc="best", frameon=True, framealpha=0.95,
               facecolor=P["surface"], edgecolor=P["line"], fontsize=8, labelcolor=P["ink"])
+    _heading(ax, title, subtitle)
+    return fig
+
+
+def _draw_nodes(ax, coords, names, order=None, halo=None):
+    """Gambar titik kota. n <= 25: lengkap; n <= 60: tanpa nama; n > 60: titik kecil."""
+    n = len(coords)
+    halo = halo or [pe.withStroke(linewidth=3.2, foreground=P["map_bg"])]
+    big, mid = n <= 25, n <= 60
+    for i, (x, y) in enumerate(coords):
+        depot = i == 0
+        if big:
+            s = 430 if depot else 300
+        elif mid:
+            s = 220 if depot else 120
+        else:
+            s = 160 if depot else 22
+        ax.scatter([x], [y], s=s, zorder=4,
+                   color=P["sun"] if depot else P["surface"],
+                   edgecolors=P["ink"], linewidths=1.8 if big else 1.0)
+        if depot:
+            ax.text(x, y, "★", ha="center", va="center", fontsize=11 if big else 8,
+                    fontweight="bold", color=P["ink"], zorder=5)
+        elif order is not None and mid:
+            ax.text(x, y, str(order[i]), ha="center", va="center",
+                    fontsize=9 if big else 6.5, fontweight="bold", color=P["ink"], zorder=5)
+        if big or depot:
+            ax.annotate(names[i] + ("  · DEPOT" if depot else ""), (x, y),
+                        xytext=(0, -19 if depot else 17), textcoords="offset points",
+                        ha="center", va="top" if depot else "baseline",
+                        fontsize=9 if big else 8, fontweight="bold", color=P["ink"],
+                        path_effects=halo, zorder=6)
+
+
+def plot_points(coords, names, title="Data Kota", subtitle=None, ax=None):
+    """Peta titik kota saja (sebelum optimasi). Return: matplotlib Figure."""
+    fig, ax = _prepare_axes(ax)
+    _style_axes(ax)
+    _draw_nodes(ax, coords, names, None)
+    ax.margins(0.14)
     _heading(ax, title, subtitle)
     return fig
 
