@@ -13,7 +13,7 @@
 
 Metode pembentukan solusi awal yang tersedia meliputi **Nearest Neighbor**, **Farthest Insertion**, dan **Random**. Pengguna dapat memilih **Simulated Annealing (SA)** atau **Tabu Search (TS)** sebagai metode optimasi, serta mengaktifkan **2-Opt Local Search** sebagai tahap perbaikan tambahan.
 
-Aplikasi menyediakan tiga cara memasukkan data, yaitu **Import**, **Generate**, dan **Manual**. Fitur lainnya mencakup pengaturan parameter algoritma, visualisasi rute awal dan akhir, grafik konvergensi, ekspor hasil, perbandingan beberapa percobaan (*run*), pencatatan log, analisis parameter, dan reset aplikasi.
+Aplikasi menyediakan tiga metode input data, yaitu Import, Generate, dan Manual. Fitur lainnya mencakup pengaturan parameter algoritma, visualisasi rute awal dan akhir, grafik konvergensi, ekspor hasil, perbandingan beberapa run, Log Iterasi, Analisis Parameter, dan Reset. Fitur Analisis Parameter digunakan untuk mengevaluasi pengaruh variasi parameter terhadap hasil optimasi, sedangkan Log Iterasi menampilkan rincian proses pencarian solusi.
 
 ---
 
@@ -222,66 +222,99 @@ Pengguna dapat memulai pengujian dengan mengimpor dataset, membuat data otomatis
 
 ### 8.1 Memasukkan Data Kota
 
-Buka aplikasi **TSP Optimizer**, kemudian masukkan data kota melalui salah satu metode berikut:
+Aplikasi menyediakan tiga tab untuk memasukkan data.
 
-- **Upload CSV / Excel:** Memuat dataset dari file eksternal.
-- **Input Manual:** Memasukkan data kota secara langsung melalui aplikasi.
+- **Import:** Mengunggah file CSV/Excel dan mengunduh template data.
+- **Generate:** Membuat data kota secara otomatis dengan menentukan jumlah titik, seed, batas koordinat X/Y, dan pola sebaran yang tersedia.
+- **Manual:** Membuka tabel input untuk memasukkan atau mengedit data kota.
 
-Untuk file CSV, gunakan format kolom `no`, `name`, `x`, dan `y`. Setelah data berhasil dimuat, aplikasi akan menampilkan jumlah kota yang tersedia.
+Untuk file CSV, gunakan kolom `name`, `x`, dan `y` sebagai kolom wajib. Kolom `no` bersifat opsional. Baris pertama digunakan sebagai depot sesuai ketentuan format data aplikasi.
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/5cd924b0-0fa5-4d4b-85c6-7f1472287b3b" width="365" alt="Tampilan input data kota">
-</p>
-<p align="center"><em>Gambar 1. Tampilan fitur input data kota pada TSP Optimizer.</em></p>
+<img width="413" height="419" alt="image" src="https://github.com/user-attachments/assets/19982b4f-3083-4101-ba9e-98a8deb9f76d" />
+
 
 ### 8.2 Mengatur Metode Optimasi
 
-Pada bagian **Inisialisasi Rute**, pilih salah satu metode pembentukan solusi awal, yaitu **Nearest Neighbor**, **Farthest Insertion**, atau **Random**.
+Pada bagian **Inisialisasi Rute**, pilih metode pembentukan solusi awal, yaitu **Nearest Neighbor**, **Farthest Insertion**, atau **Random**. Seed dapat digunakan untuk mengatur percobaan yang melibatkan proses acak.
 
-Selanjutnya, aktifkan opsi **Gunakan metaheuristik** untuk melakukan optimasi menggunakan **Simulated Annealing** atau **Tabu Search**. Pengguna juga dapat mengaktifkan opsi **Terapkan 2-Opt setelahnya** sebagai tahap perbaikan rute tambahan.
+Aktifkan **Gunakan metaheuristik** apabila ingin menggunakan **Simulated Annealing** atau **Tabu Search**. Sesuaikan parameter algoritma yang tersedia. Parameter Simulated Annealing mencakup suhu awal, laju pendinginan, suhu minimum, batas iterasi, dan operator perpindahan.
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/4c898e89-c69f-4d4f-a1ab-d5a44abab2c7" width="372" alt="Pengaturan metode optimasi">
-</p>
-<p align="center"><em>Gambar 2. Tampilan pengaturan metode inisialisasi dan algoritma optimasi.</em></p>
+Pengguna juga dapat mengaktifkan **2-Opt Local Search** sebagai tahap perbaikan tambahan. Fitur ini berbeda dari operator perpindahan yang digunakan selama pencarian metaheuristik.
+
+<img width="417" height="520" alt="image" src="https://github.com/user-attachments/assets/3172539d-c105-46c3-8f12-82401347181b" />
+<img width="425" height="274" alt="image" src="https://github.com/user-attachments/assets/763c2fd3-9651-4b19-b28a-dd3ef9d3d9cc" />
+
+
 
 ### 8.3 Menjalankan Optimasi
 
-Setelah data dan metode ditentukan, klik tombol **JALANKAN** untuk memulai proses optimasi.
+Setelah data dan konfigurasi ditentukan, klik tombol **JALANKAN** untuk memulai proses optimasi. Aplikasi membentuk solusi awal, menjalankan metaheuristik apabila diaktifkan, dan menerapkan 2-Opt Local Search apabila dipilih.
 
-Aplikasi akan membentuk rute awal, menjalankan algoritma metaheuristik apabila diaktifkan, kemudian menerapkan 2-Opt sesuai pengaturan pengguna. Setelah proses selesai, hasil perhitungan ditampilkan pada panel utama aplikasi.
+Setelah proses selesai, hasil perhitungan dan informasi proses optimasi ditampilkan pada panel utama.
 
 ### 8.4 Melihat Hasil Optimasi
 
-Hasil optimasi dapat diamati melalui beberapa komponen berikut:
+Hasil optimasi ditampilkan melalui beberapa komponen berikut.
 
 | Komponen | Keterangan |
-|----------|------------|
-| **Peta Rute** | Menampilkan visualisasi urutan perjalanan antarkota. |
-| **Jarak Awal** | Total jarak sebelum proses optimasi. |
-| **Hasil Optimasi** | Total jarak setelah proses optimasi utama. |
-| **Setelah 2-Opt** | Total jarak setelah perbaikan tambahan menggunakan 2-Opt. |
-| **Total Gain** | Selisih jarak dan persentase perubahan terhadap rute awal. |
-| **Konvergensi** | Menampilkan perkembangan nilai jarak selama proses pencarian. |
-| **Urutan Rute** | Menampilkan urutan kunjungan kota berdasarkan hasil akhir. |
+|---|---|
+| **Peta Rute** | Menampilkan visualisasi perjalanan antarkota |
+| **Awal** | Menampilkan rute sebelum optimasi |
+| **Akhir** | Menampilkan rute hasil akhir |
+| **Keduanya** | Menampilkan rute awal dan akhir untuk perbandingan visual |
+| **Jarak Awal** | Total jarak rute sebelum optimasi |
+| **Hasil Metaheuristik** | Total jarak setelah tahap metaheuristik |
+| **Setelah 2-Opt LS** | Total jarak setelah perbaikan lokal, jika diterapkan |
+| **Total Gain** | Menampilkan perubahan jarak dan persentase perbaikan |
+| **Konvergensi** | Menampilkan perkembangan nilai solusi selama pencarian |
+| **Urutan Rute** | Menampilkan urutan kunjungan kota |
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/54f2866c-3bc5-4fec-b7ef-c105f37f827a" width="850" alt="Tampilan hasil optimasi TSP">
-</p>
-<p align="center"><em>Gambar 3. Tampilan hasil optimasi dan visualisasi rute pada TSP Optimizer.</em></p>
+Nilai jarak dan gain perlu dibaca sesuai tahap optimasi yang ditampilkan. Grafik konvergensi membantu mengamati perkembangan solusi selama proses pencarian.
+
+<img width="1422" height="937" alt="image" src="https://github.com/user-attachments/assets/6a5187a4-cd3d-4104-9b59-c47b8abdaa61" />
+
 
 ### 8.5 Mengekspor dan Membandingkan Hasil
 
-Setelah proses optimasi selesai, pengguna dapat memanfaatkan dua fitur tambahan:
+Aplikasi menyediakan beberapa fitur untuk mendukung evaluasi dan dokumentasi hasil optimasi.
 
-- **Export Hasil:** Menyimpan hasil optimasi untuk dokumentasi dan analisis.
-- **Bandingkan Run:** Membandingkan hasil dari beberapa percobaan dengan metode atau konfigurasi algoritma yang berbeda.
+- **Export:** Mengekspor hasil optimasi.
+- **Bandingkan:** Membandingkan beberapa run berdasarkan konfigurasi dan hasil yang diperoleh.
+- **Log:** Menampilkan rincian proses iterasi algoritma.
+- **Analisis Parameter:** Menguji beberapa nilai parameter dan membandingkan hasilnya.
+- **Reset:** Mengatur ulang kondisi aplikasi sesuai fungsi yang tersedia.
 
-Untuk melakukan perbandingan, jalankan optimasi menggunakan beberapa kombinasi metode, kemudian klik tombol **Bandingkan Run**. Fitur ini membantu pengguna mengevaluasi perbedaan hasil optimasi dari setiap percobaan.
+Fitur Bandingkan menampilkan konfigurasi algoritma, jarak awal dan akhir, gain, jumlah iterasi, waktu komputasi, serta kriteria berhenti. Fitur ini membantu pengguna mengevaluasi perbedaan hasil dari beberapa percobaan.
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/e0eb1457-02d9-4e99-9945-33fa329f5e03" width="750" alt="Perbandingan hasil optimasi">
-</p>
-<p align="center"><em>Gambar 4. Tampilan perbandingan hasil optimasi menggunakan konfigurasi algoritma yang berbeda.</em></p>
+Fitur Log Iterasi menampilkan informasi seperti nomor iterasi, suhu, gerakan yang dipilih (*move*), perubahan nilai objektif, probabilitas penerimaan, bilangan acak, keputusan penerimaan, nilai solusi saat ini (*current*), dan solusi terbaik (*best*). Pengguna dapat memfilter catatan berdasarkan kondisi yang tersedia dan mengekspor log untuk dokumentasi.
+
+Pada fitur Analisis Parameter, pengguna memilih algoritma, parameter yang diuji, daftar nilai parameter, jumlah pengulangan, serta opsi 2-Opt Local Search. Hasil analisis disajikan dalam tabel yang memuat nilai terbaik (*best*), rata-rata, nilai terburuk (*worst*), standar deviasi (*std*), gain rata-rata, rata-rata iterasi, dan rata-rata waktu komputasi. Grafik distribusi jarak dan perbandingan waktu serta iterasi membantu pengguna menilai pengaruh perubahan parameter terhadap kualitas solusi dan biaya komputasi.
+
+<img width="1739" height="913" alt="image" src="https://github.com/user-attachments/assets/983c1819-ef90-490c-97d9-bfc42047c006" />
+<img width="1647" height="929" alt="image" src="https://github.com/user-attachments/assets/cd530802-cab6-44bc-8b32-805ef3f818f1" />
+<img width="1618" height="913" alt="image" src="https://github.com/user-attachments/assets/1098a97a-af2d-4cae-8eaa-78394bfcf7c7" />
+
+
+### 8.6 Melakukan Analisis Parameter
+
+Fitur Analisis Parameter digunakan untuk mengamati pengaruh perubahan nilai parameter terhadap hasil optimasi. Pengguna memilih algoritma, parameter yang akan diuji, daftar nilai yang dipisahkan dengan koma, jumlah pengulangan, dan opsi 2-Opt Local Search apabila diperlukan.
+
+Untuk setiap nilai parameter, aplikasi menjalankan percobaan berulang menggunakan seed yang berbeda. Hasilnya dirangkum dalam tabel yang mencakup nilai terbaik, rata-rata, terburuk, standar deviasi, gain rata-rata, rata-rata iterasi, dan rata-rata waktu komputasi.
+
+Aplikasi juga menyediakan grafik distribusi jarak akhir serta perbandingan waktu komputasi dan jumlah iterasi. Pengguna dapat menggunakan tombol **Jalankan** untuk memulai analisis dan **Export** untuk mengekspor hasilnya.
+
+<img width="1646" height="934" alt="image" src="https://github.com/user-attachments/assets/c2095b41-02e1-4e08-ad2b-5598d4b9e421" />
+
+
+### 8.7 Melihat Log Iterasi
+
+Fitur Log Iterasi digunakan untuk memeriksa proses pencarian solusi selama algoritma berjalan. Pada Simulated Annealing, informasi yang ditampilkan mencakup suhu, perubahan nilai objektif, probabilitas penerimaan, keputusan penerimaan atau penolakan gerakan, serta nilai solusi saat ini dan solusi terbaik.
+
+Pengguna dapat memilih untuk hanya menampilkan iterasi ketika solusi terbaik membaik atau ketika gerakan diterima. Tombol **Export log** digunakan untuk mengekspor catatan iterasi sebagai bahan dokumentasi dan analisis.
+
+Bagian bawah jendela menampilkan kriteria berhenti, jumlah iterasi, dan parameter yang digunakan pada proses optimasi. Informasi ini membantu pengguna memahami bagaimana algoritma mencapai kondisi akhirnya.
+
+<img width="1618" height="913" alt="image" src="https://github.com/user-attachments/assets/8cad5d03-baf5-47ae-88f2-4840e59b6bb6" />
+
 
 ---
