@@ -230,7 +230,9 @@ Aplikasi menyediakan tiga tab untuk memasukkan data.
 
 Untuk file CSV, gunakan kolom `name`, `x`, dan `y` sebagai kolom wajib. Kolom `no` bersifat opsional. Baris pertama digunakan sebagai depot sesuai ketentuan format data aplikasi.
 
-<img width="413" height="419" alt="image" src="https://github.com/user-attachments/assets/19982b4f-3083-4101-ba9e-98a8deb9f76d" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/19982b4f-3083-4101-ba9e-98a8deb9f76d" width="500" alt="Tampilan Input Data Kota">
+</p>
 
 
 ### 7.2 Mengatur Metode Optimasi
@@ -241,8 +243,13 @@ Aktifkan **Gunakan metaheuristik** apabila ingin menggunakan **Simulated Anneali
 
 Pengguna juga dapat mengaktifkan **2-Opt Local Search** sebagai tahap perbaikan tambahan. Fitur ini berbeda dari operator perpindahan yang digunakan selama pencarian metaheuristik.
 
-<img width="417" height="520" alt="image" src="https://github.com/user-attachments/assets/3172539d-c105-46c3-8f12-82401347181b" />
-<img width="425" height="274" alt="image" src="https://github.com/user-attachments/assets/763c2fd3-9651-4b19-b28a-dd3ef9d3d9cc" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3172539d-c105-46c3-8f12-82401347181b" width="500" alt="Pengaturan Inisialisasi Rute dan Metaheuristik">
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/763c2fd3-9651-4b19-b28a-dd3ef9d3d9cc" width="500" alt="Pengaturan 2-Opt Local Search dan Tombol Jalankan">
+</p>
 
 
 
