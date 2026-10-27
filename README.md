@@ -2,30 +2,30 @@
 # TSP Optimizer
 ### Implementasi Algoritma Simulated Annealing dan Tabu Search dengan Heuristik Konstruktif dan 2-Opt Local Search
 
-**Proyek Mata Kuliah Metode Optimasi Metaheuristik — Kelompok ...**
+**Proyek Mata Kuliah Metode Optimasi Metaheuristik — Kelompok 3**
 
 ---
 
 
 ## 1. Deskripsi Proyek
 
-**TSP Optimizer** merupakan aplikasi desktop untuk menyelesaikan permasalahan *Traveling Salesman Problem* (TSP), yaitu menentukan rute kunjungan sejumlah kota dengan total jarak minimum. Aplikasi ini menyediakan metode pembentukan solusi awal, optimasi rute, serta visualisasi hasil perhitungan dalam antarmuka yang interaktif.
+**TSP Optimizer** merupakan aplikasi desktop untuk menyelesaikan permasalahan *Traveling Salesman Problem* (TSP), yaitu menentukan rute kunjungan sejumlah kota dengan total jarak minimum. Aplikasi ini mengintegrasikan metode pembentukan solusi awal, algoritma metaheuristik, dan pencarian lokal untuk membantu proses optimasi rute.
 
-Metode pembentukan solusi awal terdiri dari **Nearest Neighbor**, **Farthest Insertion**, dan **Random**. Pengguna dapat menerapkan algoritma metaheuristik **Simulated Annealing (SA)** atau **Tabu Search (TS)**, serta menggunakan **2-Opt Local Search** sebagai perbaikan tambahan.
+Metode pembentukan solusi awal yang tersedia meliputi **Nearest Neighbor**, **Farthest Insertion**, dan **Random**. Pengguna dapat memilih **Simulated Annealing (SA)** atau **Tabu Search (TS)** sebagai metode optimasi, serta mengaktifkan **2-Opt Local Search** sebagai tahap perbaikan tambahan.
 
-Aplikasi mendukung input data melalui CSV/Excel maupun secara manual, pengaturan metode optimasi, visualisasi rute, grafik konvergensi, ekspor hasil, serta fitur perbandingan run. TSP Optimizer v1.0 tersedia dalam bentuk aplikasi desktop untuk Windows dan macOS sehingga pengguna dapat menjalankannya tanpa perlu memasang Python secara terpisah.
+Aplikasi menyediakan tiga cara memasukkan data, yaitu **Import**, **Generate**, dan **Manual**. Fitur lainnya mencakup pengaturan parameter algoritma, visualisasi rute awal dan akhir, grafik konvergensi, ekspor hasil, perbandingan beberapa percobaan (*run*), pencatatan log, analisis parameter, dan reset aplikasi.
 
 ---
 
 ## 2. Anggota Kelompok
 
-| No. | Nama Anggota | NIM | Pembagian Tugas |
-|:---:|--------------|-----|-----------------|
-| 1 | Violita Karina Putri | 5052241009 | [Tugas] |
-| 2 | George Eldzen Edison | 5052241024 | [Tugas] |
-| 3 | Azizah Adilah | 5052241028 | [Tugas] |
-| 4 | Aqila Ikhza Kusumawardani | 5052241032 | [Tugas] |
-| 5 | Najwa Aulia | 5052241035 | [Tugas] |
+| No. | Nama Anggota | NIM | 
+|:---:|--------------|-----|
+| 1 | Violita Karina Putri | 5052241009 | 
+| 2 | George Eldzen Edison | 5052241024 |
+| 3 | Azizah Adilah | 5052241028 | 
+| 4 | Aqila Ikhza Kusumawardani | 5052241032 | 
+| 5 | Najwa Aulia | 5052241035 | 
 
 ---
 
@@ -136,23 +136,23 @@ Proses perbaikan dilakukan secara berulang hingga tidak ditemukan perubahan yang
 
 
 
-## 5. Metodologi & Pipeline
+## 5. Metodologi dan Pipeline
 
 ### 5.1 Metodologi
 
-Proses optimasi pada aplikasi **TSP Optimizer** dimulai dengan memasukkan data kota melalui file CSV/Excel atau input manual. Data tersebut kemudian digunakan untuk menghitung jarak antarkota sebagai dasar pembentukan rute perjalanan.
+Proses optimasi dimulai dengan memasukkan data kota melalui **Import**, **Generate**, atau **Manual**. Data yang tersedia kemudian digunakan untuk menghitung jarak antarkota sebagai dasar pembentukan rute.
 
-Selanjutnya, pengguna memilih metode pembentukan solusi awal, yaitu **Nearest Neighbor**, **Farthest Insertion**, atau **Random**. Rute awal dapat dioptimalkan menggunakan algoritma **Simulated Annealing** atau **Tabu Search** apabila fitur metaheuristik diaktifkan.
+Pengguna memilih metode pembentukan solusi awal, yaitu **Nearest Neighbor**, **Farthest Insertion**, atau **Random**. Rute awal dapat dioptimalkan menggunakan **Simulated Annealing** atau **Tabu Search** apabila fitur metaheuristik diaktifkan. Pengguna juga dapat mengatur parameter algoritma dan seed sesuai kebutuhan pengujian.
 
-Setelah itu, pengguna dapat menerapkan **2-Opt Local Search** sebagai perbaikan tambahan. Hasil akhir ditampilkan melalui peta rute, total jarak, grafik konvergensi, dan urutan kunjungan kota. Aplikasi juga menyediakan fitur ekspor dan perbandingan hasil percobaan.
+Setelah pencarian metaheuristik selesai, pengguna dapat mengaktifkan **2-Opt Local Search** untuk melakukan perbaikan lokal tambahan. Jika metaheuristik tidak diaktifkan, proses dilanjutkan tanpa tahap tersebut. Hasil akhir ditampilkan melalui visualisasi rute, informasi jarak, grafik konvergensi, dan urutan rute. Aplikasi juga menyediakan fitur ekspor dan perbandingan hasil percobaan.
 
 ### 5.2 Flowchart Pipeline
 
 ```mermaid
 flowchart TD
-    A([Mulai]) --> B[Input Data CSV/Excel atau Manual]
-    B --> C[Perhitungan Jarak Antarkota]
-    C --> D{Pilih Solusi Awal}
+    A([Mulai]) --> B[Input Data: Import, Generate, atau Manual]
+    B --> C[Hitung Matriks Jarak]
+    C --> D[Pilih Metode Solusi Awal]
 
     D --> E[Nearest Neighbor]
     D --> F[Farthest Insertion]
@@ -162,71 +162,56 @@ flowchart TD
     F --> H
     G --> H
 
-    H --> I{Gunakan Metaheuristik?}
-    I -->|Ya| J{Pilih Algoritma}
-    I -->|Tidak| M[Rute Hasil Pencarian]
+    H --> I{Metaheuristik Aktif?}
+    I -->|Ya| J[Pilih SA atau Tabu Search]
+    I -->|Tidak| L[Evaluasi Rute]
+    J --> K[Optimasi Rute]
+    K --> L
 
-    J --> K[Simulated Annealing]
-    J --> L[Tabu Search]
+    L --> M{2-Opt LS Aktif?}
+    M -->|Ya| N[Perbaikan Lokal 2-Opt]
+    M -->|Tidak| O[Hasil Akhir]
+    N --> O
 
-    K --> M
-    L --> M
-
-    M --> N{Aktifkan 2-Opt?}
-    N -->|Ya| O[Perbaikan Rute 2-Opt]
-    N -->|Tidak| P[Hasil Akhir]
-    O --> P
-
-    P --> Q[Visualisasi dan Evaluasi Hasil]
+    O --> P[Visualisasi dan Evaluasi]
+    P --> Q[Ekspor atau Bandingkan Run]
     Q --> R([Selesai])
 ```
 
 ### 5.3 Tahapan Proses Optimasi
 
 | Tahap | Proses | Keterangan |
-|:---:|--------|------------|
-| 1 | Input Data | Memasukkan data kota melalui CSV/Excel atau input manual |
-| 2 | Perhitungan Jarak | Menghitung jarak antarkota untuk proses optimasi |
+|:---:|---|---|
+| 1 | Input Data | Memuat, membuat, atau memasukkan data kota |
+| 2 | Perhitungan Jarak | Menghitung jarak antarkota berdasarkan koordinat |
 | 3 | Solusi Awal | Membentuk rute menggunakan NN, Farthest Insertion, atau Random |
-| 4 | Optimasi Metaheuristik | Menjalankan SA atau Tabu Search apabila diaktifkan |
-| 5 | Perbaikan Lokal | Menerapkan 2-Opt apabila diaktifkan |
-| 6 | Output & Evaluasi | Menampilkan rute, jarak, grafik konvergensi, dan hasil optimasi |
+| 4 | Optimasi Metaheuristik | Menjalankan SA atau TS jika diaktifkan |
+| 5 | Perbaikan Lokal | Menjalankan 2-Opt LS jika diaktifkan |
+| 6 | Evaluasi | Menampilkan rute, jarak, konvergensi, dan urutan kota |
+| 7 | Dokumentasi | Mengekspor hasil atau membandingkan beberapa run |
 
 ---
 
 
-## 6. Perhitungan Manual
+## 6. Cara Instalasi dan Menjalankan Aplikasi
 
----
+TSP Optimizer v1.0 tersedia dalam paket installer Windows yang disediakan pada distribusi aplikasi. Pengguna dapat menjalankan versi installer tanpa perlu memasang Python atau library pemrograman secara terpisah.
 
+### 6.1 Instalasi Windows
 
-
-## 7. Cara Instalasi & Menjalankan Aplikasi
-
-**TSP Optimizer v1.0** tersedia sebagai aplikasi desktop untuk Windows dan macOS. Pengguna tidak perlu menginstal Python, VS Code, maupun library tambahan untuk menjalankan versi installer.
-
-### 7.1 Instalasi Windows
-
-1. Unduh dan ekstrak file `TSP-Optimizer-v1.0.zip`.
-2. Buka folder `Windows`.
+1. Unduh file ZIP installer Windows dari repository atau sumber distribusi aplikasi.
+2. Ekstrak file ZIP ke folder yang diinginkan.
 3. Jalankan `TSP-Optimizer-Setup-v1.0.exe`.
 4. Ikuti petunjuk instalasi hingga selesai.
-5. Buka **TSP Optimizer** melalui Start Menu atau shortcut Desktop.
+5. Buka **TSP Optimizer** melalui shortcut atau lokasi instalasi yang tersedia.
 
-### 7.2 Instalasi macOS
+Jika Windows menampilkan peringatan keamanan, pastikan installer berasal dari sumber yang dipercaya sebelum melanjutkan.
 
-Versi macOS yang disediakan ditujukan untuk perangkat Apple Silicon (M1/M2/M3/M4).
+### 6.2 Menjalankan Aplikasi
 
-1. Buka folder `Mac`.
-2. Jalankan `TSP-Optimizer-v1.0.dmg`.
-3. Pindahkan aplikasi **TSP Optimizer** ke folder Applications.
-4. Buka aplikasi melalui folder Applications.
+Setelah instalasi selesai, buka **TSP Optimizer**. Panel sebelah kiri digunakan untuk memasukkan data dan mengatur algoritma, sedangkan panel utama menampilkan visualisasi rute dan hasil optimasi.
 
-> **Catatan:** Karena aplikasi belum ditandatangani secara digital, sistem operasi mungkin menampilkan peringatan keamanan. Pastikan file berasal dari repository atau pengembang yang dipercaya sebelum memberikan izin menjalankan aplikasi.
-
-### 7.3 Menjalankan Aplikasi
-
-Setelah instalasi selesai, buka **TSP Optimizer**. Jendela utama aplikasi akan menampilkan panel input data dan konfigurasi algoritma di sebelah kiri, serta hasil optimasi dan visualisasi rute di sebelah kanan.
+Pengguna dapat memulai pengujian dengan mengimpor dataset, membuat data otomatis melalui Generate, atau memasukkan data melalui tabel Manual.
 
 ---
 
