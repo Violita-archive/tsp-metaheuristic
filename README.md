@@ -218,9 +218,9 @@ Pengguna dapat memulai pengujian dengan mengimpor dataset, membuat data otomatis
 
 
 
-## 8. Tutorial Penggunaan Aplikasi
+## 7. Tutorial Penggunaan Aplikasi
 
-### 8.1 Memasukkan Data Kota
+### 7.1 Memasukkan Data Kota
 
 Aplikasi menyediakan tiga tab untuk memasukkan data.
 
@@ -233,7 +233,7 @@ Untuk file CSV, gunakan kolom `name`, `x`, dan `y` sebagai kolom wajib. Kolom `n
 <img width="413" height="419" alt="image" src="https://github.com/user-attachments/assets/19982b4f-3083-4101-ba9e-98a8deb9f76d" />
 
 
-### 8.2 Mengatur Metode Optimasi
+### 7.2 Mengatur Metode Optimasi
 
 Pada bagian **Inisialisasi Rute**, pilih metode pembentukan solusi awal, yaitu **Nearest Neighbor**, **Farthest Insertion**, atau **Random**. Seed dapat digunakan untuk mengatur percobaan yang melibatkan proses acak.
 
@@ -246,13 +246,13 @@ Pengguna juga dapat mengaktifkan **2-Opt Local Search** sebagai tahap perbaikan 
 
 
 
-### 8.3 Menjalankan Optimasi
+### 7.3 Menjalankan Optimasi
 
 Setelah data dan konfigurasi ditentukan, klik tombol **JALANKAN** untuk memulai proses optimasi. Aplikasi membentuk solusi awal, menjalankan metaheuristik apabila diaktifkan, dan menerapkan 2-Opt Local Search apabila dipilih.
 
 Setelah proses selesai, hasil perhitungan dan informasi proses optimasi ditampilkan pada panel utama.
 
-### 8.4 Melihat Hasil Optimasi
+### 7.4 Melihat Hasil Optimasi
 
 Hasil optimasi ditampilkan melalui beberapa komponen berikut.
 
@@ -274,7 +274,7 @@ Nilai jarak dan gain perlu dibaca sesuai tahap optimasi yang ditampilkan. Grafik
 <img width="1422" height="937" alt="image" src="https://github.com/user-attachments/assets/6a5187a4-cd3d-4104-9b59-c47b8abdaa61" />
 
 
-### 8.5 Mengekspor dan Membandingkan Hasil
+### 7.5 Mengekspor dan Membandingkan Hasil
 
 Aplikasi menyediakan beberapa fitur untuk mendukung evaluasi dan dokumentasi hasil optimasi.
 
@@ -295,7 +295,7 @@ Pada fitur Analisis Parameter, pengguna memilih algoritma, parameter yang diuji,
 <img width="1618" height="913" alt="image" src="https://github.com/user-attachments/assets/1098a97a-af2d-4cae-8eaa-78394bfcf7c7" />
 
 
-### 8.6 Melakukan Analisis Parameter
+### 7.6 Melakukan Analisis Parameter
 
 Fitur Analisis Parameter digunakan untuk mengamati pengaruh perubahan nilai parameter terhadap hasil optimasi. Pengguna memilih algoritma, parameter yang akan diuji, daftar nilai yang dipisahkan dengan koma, jumlah pengulangan, dan opsi 2-Opt Local Search apabila diperlukan.
 
@@ -306,7 +306,7 @@ Aplikasi juga menyediakan grafik distribusi jarak akhir serta perbandingan waktu
 <img width="1646" height="934" alt="image" src="https://github.com/user-attachments/assets/c2095b41-02e1-4e08-ad2b-5598d4b9e421" />
 
 
-### 8.7 Melihat Log Iterasi
+### 7.7 Melihat Log Iterasi
 
 Fitur Log Iterasi digunakan untuk memeriksa proses pencarian solusi selama algoritma berjalan. Pada Simulated Annealing, informasi yang ditampilkan mencakup suhu, perubahan nilai objektif, probabilitas penerimaan, keputusan penerimaan atau penolakan gerakan, serta nilai solusi saat ini dan solusi terbaik.
 
