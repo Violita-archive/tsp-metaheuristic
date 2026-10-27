@@ -19,7 +19,7 @@ Aplikasi menyediakan tiga metode input data, yaitu Import, Generate, dan Manual.
 
 ## 2. Anggota Kelompok
 
-| No. | Nama Anggota | NIM | 
+| No. | Nama Anggota | NRP | 
 |:---:|--------------|-----|
 | 1 | Violita Karina Putri | 5052241009 | 
 | 2 | George Eldzen Edison | 5052241024 |
@@ -115,11 +115,13 @@ Solusi yang memiliki jarak lebih pendek akan diterima, sedangkan solusi yang leb
 
 Berbeda dengan pencarian lokal biasa, Tabu Search dapat menerima solusi yang lebih buruk untuk menjelajahi ruang pencarian yang lebih luas. Gerakan yang masuk ke dalam *tabu list* dibatasi sementara, tetapi dapat diterima kembali melalui *aspiration criterion* apabila menghasilkan solusi terbaik baru.
 
-### 4.5 2-Opt Local Search
+### 4.5 2-Opt
 
-*2-Opt* merupakan metode pencarian lokal yang memperbaiki rute dengan memilih dua posisi dan membalik urutan kota di antara kedua posisi tersebut. Perubahan diterima apabila menghasilkan total jarak yang lebih pendek dibandingkan rute sebelumnya.
+*2-Opt* merupakan metode optimasi rute yang bekerja dengan memilih dua sisi pada rute, kemudian menyambungkan kembali sisi tersebut dengan membalik urutan kota pada segmen tertentu. Perubahan ini menghasilkan solusi tetangga yang dapat dievaluasi berdasarkan total jaraknya. Solusi dengan jarak lebih pendek menunjukkan perbaikan terhadap rute sebelumnya.
 
-Proses perbaikan dilakukan secara berulang hingga tidak ditemukan perubahan yang dapat mengurangi jarak perjalanan. Dalam aplikasi TSP Optimizer, 2-Opt digunakan sebagai tahap penyempurnaan setelah optimasi Simulated Annealing atau Tabu Search dan dapat diaktifkan atau dinonaktifkan oleh pengguna.
+Dalam aplikasi TSP Optimizer, 2-Opt memiliki dua fungsi. Pertama, 2-Opt dapat digunakan sebagai operator perpindahan (*move operator*) selama proses pencarian metaheuristik untuk menghasilkan kandidat rute baru. Kedua, **2-Opt Local Search** dapat diaktifkan sebagai tahap perbaikan tambahan setelah metaheuristik selesai. Pada tahap ini, perbaikan dilakukan selama masih ditemukan perubahan yang mengurangi jarak hingga mencapai optimum lokal atau kondisi berhenti yang ditetapkan.
+
+Kedua fungsi tersebut memiliki perbedaan dalam penerapannya. Sebagai operator perpindahan, 2-Opt menjadi bagian dari proses pencarian solusi oleh metaheuristik. Sebagai *Local Search*, 2-Opt berfokus pada perbaikan rute yang telah dihasilkan. Dengan demikian, aplikasi memungkinkan pengguna mengatur penggunaan 2-Opt sesuai kebutuhan optimasi.
 
 ### 4.6 Ringkasan Metode
 
@@ -130,7 +132,9 @@ Proses perbaikan dilakukan secara berulang hingga tidak ditemukan perubahan yang
 | Random | Inisialisasi acak | Membentuk rute awal secara acak |
 | Simulated Annealing | Metaheuristik | Mengoptimalkan rute menggunakan probabilitas penerimaan solusi |
 | Tabu Search | Metaheuristik | Mengoptimalkan rute menggunakan memori tabu |
-| 2-Opt | Local Search | Memperbaiki rute melalui pembalikan segmen |
+| 2-Opt Move Operator | Operator perpindahan | Membentuk kandidat rute melalui pembalikan segmen selama pencarian metaheuristik |
+| 2-Opt Local Search | Pencarian lokal | Memperbaiki rute setelah metaheuristik hingga mencapai optimum lokal atau kondisi berhenti |
+
 
 ---
 
