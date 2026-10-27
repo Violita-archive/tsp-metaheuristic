@@ -276,43 +276,41 @@ Nilai jarak dan gain perlu dibaca sesuai tahap optimasi yang ditampilkan. Grafik
 
 ### 7.5 Mengekspor dan Membandingkan Hasil
 
-Aplikasi menyediakan beberapa fitur untuk mendukung evaluasi dan dokumentasi hasil optimasi.
+Aplikasi menyediakan fitur untuk menyimpan hasil optimasi dan membandingkan beberapa percobaan.
 
 - **Export:** Mengekspor hasil optimasi.
-- **Bandingkan:** Membandingkan beberapa run berdasarkan konfigurasi dan hasil yang diperoleh.
-- **Log:** Menampilkan rincian proses iterasi algoritma.
-- **Analisis Parameter:** Menguji beberapa nilai parameter dan membandingkan hasilnya.
+- **Bandingkan:** Membandingkan hasil beberapa *run* berdasarkan konfigurasi algoritma.
 - **Reset:** Mengatur ulang kondisi aplikasi sesuai fungsi yang tersedia.
 
-Fitur Bandingkan menampilkan konfigurasi algoritma, jarak awal dan akhir, gain, jumlah iterasi, waktu komputasi, serta kriteria berhenti. Fitur ini membantu pengguna mengevaluasi perbedaan hasil dari beberapa percobaan.
+Fitur Bandingkan menampilkan konfigurasi metode, jarak awal dan akhir, *gain*, jumlah iterasi, waktu komputasi, serta kriteria berhenti. Informasi tersebut membantu pengguna mengevaluasi perbedaan hasil dari beberapa percobaan.
 
-Fitur Log Iterasi menampilkan informasi seperti nomor iterasi, suhu, gerakan yang dipilih (*move*), perubahan nilai objektif, probabilitas penerimaan, bilangan acak, keputusan penerimaan, nilai solusi saat ini (*current*), dan solusi terbaik (*best*). Pengguna dapat memfilter catatan berdasarkan kondisi yang tersedia dan mengekspor log untuk dokumentasi.
-
-Pada fitur Analisis Parameter, pengguna memilih algoritma, parameter yang diuji, daftar nilai parameter, jumlah pengulangan, serta opsi 2-Opt Local Search. Hasil analisis disajikan dalam tabel yang memuat nilai terbaik (*best*), rata-rata, nilai terburuk (*worst*), standar deviasi (*std*), gain rata-rata, rata-rata iterasi, dan rata-rata waktu komputasi. Grafik distribusi jarak dan perbandingan waktu serta iterasi membantu pengguna menilai pengaruh perubahan parameter terhadap kualitas solusi dan biaya komputasi.
+**Tampilan Perbandingan Run**
 
 <img width="1739" height="913" alt="image" src="https://github.com/user-attachments/assets/983c1819-ef90-490c-97d9-bfc42047c006" />
-<img width="1647" height="929" alt="image" src="https://github.com/user-attachments/assets/cd530802-cab6-44bc-8b32-805ef3f818f1" />
-<img width="1618" height="913" alt="image" src="https://github.com/user-attachments/assets/1098a97a-af2d-4cae-8eaa-78394bfcf7c7" />
 
 
 ### 7.6 Melakukan Analisis Parameter
 
-Fitur Analisis Parameter digunakan untuk mengamati pengaruh perubahan nilai parameter terhadap hasil optimasi. Pengguna memilih algoritma, parameter yang akan diuji, daftar nilai yang dipisahkan dengan koma, jumlah pengulangan, dan opsi 2-Opt Local Search apabila diperlukan.
+Fitur **Analisis Parameter** digunakan untuk mengamati pengaruh perubahan nilai parameter terhadap hasil optimasi. Pengguna dapat memilih algoritma, parameter yang diuji, daftar nilai parameter, jumlah pengulangan, serta opsi 2-Opt Local Search.
 
-Untuk setiap nilai parameter, aplikasi menjalankan percobaan berulang menggunakan seed yang berbeda. Hasilnya dirangkum dalam tabel yang mencakup nilai terbaik, rata-rata, terburuk, standar deviasi, gain rata-rata, rata-rata iterasi, dan rata-rata waktu komputasi.
+Setiap nilai parameter diuji melalui beberapa pengulangan dengan *seed* yang berbeda. Hasilnya disajikan dalam tabel yang memuat nilai terbaik (*best*), rata-rata, terburuk (*worst*), standar deviasi (*std*), *gain* rata-rata, rata-rata iterasi, dan rata-rata waktu komputasi.
 
-Aplikasi juga menyediakan grafik distribusi jarak akhir serta perbandingan waktu komputasi dan jumlah iterasi. Pengguna dapat menggunakan tombol **Jalankan** untuk memulai analisis dan **Export** untuk mengekspor hasilnya.
+Aplikasi juga menyediakan grafik distribusi jarak akhir serta perbandingan waktu komputasi dan jumlah iterasi. Pengguna dapat menjalankan analisis melalui tombol **Jalankan** dan menyimpan hasilnya melalui tombol **Export**.
+
+**Tampilan Analisis Parameter**
 
 <img width="1646" height="934" alt="image" src="https://github.com/user-attachments/assets/c2095b41-02e1-4e08-ad2b-5598d4b9e421" />
 
 
 ### 7.7 Melihat Log Iterasi
 
-Fitur Log Iterasi digunakan untuk memeriksa proses pencarian solusi selama algoritma berjalan. Pada Simulated Annealing, informasi yang ditampilkan mencakup suhu, perubahan nilai objektif, probabilitas penerimaan, keputusan penerimaan atau penolakan gerakan, serta nilai solusi saat ini dan solusi terbaik.
+Fitur **Log Iterasi** digunakan untuk memeriksa proses pencarian solusi selama algoritma berjalan. Informasi yang ditampilkan mencakup nomor iterasi, suhu, gerakan yang dipilih (*move*), perubahan nilai objektif, probabilitas penerimaan, bilangan acak, keputusan penerimaan atau penolakan, nilai solusi saat ini (*current*), dan solusi terbaik (*best*).
 
-Pengguna dapat memilih untuk hanya menampilkan iterasi ketika solusi terbaik membaik atau ketika gerakan diterima. Tombol **Export log** digunakan untuk mengekspor catatan iterasi sebagai bahan dokumentasi dan analisis.
+Pengguna dapat memfilter catatan berdasarkan kondisi yang tersedia, seperti iterasi ketika solusi terbaik membaik atau ketika gerakan diterima. Tombol **Export log** digunakan untuk mengekspor catatan iterasi sebagai bahan dokumentasi dan analisis.
 
-Bagian bawah jendela menampilkan kriteria berhenti, jumlah iterasi, dan parameter yang digunakan pada proses optimasi. Informasi ini membantu pengguna memahami bagaimana algoritma mencapai kondisi akhirnya.
+Bagian bawah jendela menampilkan informasi kondisi berhenti, jumlah iterasi, dan parameter yang digunakan dalam proses optimasi. Informasi ini membantu pengguna memahami jalannya algoritma hingga proses pencarian berakhir.
+
+**Tampilan Log Iterasi**
 
 <img width="1618" height="913" alt="image" src="https://github.com/user-attachments/assets/8cad5d03-baf5-47ae-88f2-4840e59b6bb6" />
 
